@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FAQ Chatbot: answers from your own documents, in your browser</title>
+<meta name="description" content="Build an FAQ chatbot from your own PDFs and texts. Search and embeddings run in your browser, answers cite their sources, your API key stays with you. Export as a website widget.">
+<meta name="theme-color" content="#0B0F0C">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preload" href="/assets/fonts/MartianMono.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="app.css?v=1">
+</head>
+<body>
+
+<nav class="strip" aria-label="Site">
+  <div class="in">
+    <a class="home" id="lnkHome" href="/tools/faq-chatbot/" data-t="back">← hmsk.life</a>
+    <span class="sp"></span>
+    <button type="button" class="lang" id="langBtn" data-t="langSwitch">DE</button>
+    <a id="lnkImprint" href="/imprint/" data-t="imprint">Imprint</a>
+    <a id="lnkPrivacy" href="/privacy/" data-t="privacy">Privacy</a>
+  </div>
+</nav>
+
+<header class="head wrap">
+  <p class="cmd"><span class="ps">$</span> faq-chatbot --docs ./ --cite --local</p>
+  <h1 data-t="h1">An FAQ chatbot that answers from your documents and shows its sources</h1>
+  <p class="sub" data-t="sub"></p>
+  <details class="priv" open>
+    <summary data-t="privacyTitle">Where your data goes</summary>
+    <p data-t="privacyBody"></p>
+  </details>
+</header>
+
+<main class="wrap layout">
+  <div class="side">
+    <fieldset>
+      <legend data-t="sDocs">--docs</legend>
+      <label class="drop" id="drop" for="file">
+        <input type="file" id="file" multiple>
+        <span data-t="drop">Drop files here</span>
+        <span class="muted"><span data-t="dropOr">or</span> <u data-t="browse">choose files</u></span>
+      </label>
+      <label for="paste" data-t="pasteLabel">Or paste text</label>
+      <textarea id="paste" rows="4"></textarea>
+      <div class="row">
+        <input type="text" id="pasteName" aria-label="Name" maxlength="80">
+        <button type="button" class="btn btn--ghost sm" id="pasteBtn" data-t="pasteAdd">Add text</button>
+      </div>
+      <p class="status" id="docStatus" role="status" aria-live="polite"></p>
+      <ul class="docs" id="docList"></ul>
+      <div class="row2">
+        <button type="button" class="btn btn--ghost sm" id="sampleBtn" data-t="sample">Try the sample FAQ</button>
+        <button type="button" class="btn btn--ghost sm" id="clearBtn" data-t="clearAll" hidden>Remove all</button>
+      </div>
+      <div class="sem" id="sem">
+        <p class="lbl" data-t="semTitle">Smart search</p>
+        <p class="hint" id="semText"></p>
+        <div class="meter" id="semMeter" hidden><span></span></div>
+        <button type="button" class="btn btn--ghost sm" id="semBtn" data-t="semBtn">Turn on smart search</button>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend data-t="sProvider">--provider</legend>
+      <label for="provider" data-t="provider">Provider</label>
+      <select id="provider">
+        <option value="anthropic" data-t="pAnthropic"></option>
+        <option value="openai" data-t="pOpenai"></option>
+        <option value="lmstudio" data-t="pLmstudio"></option>
+        <option value="ollama" data-t="pOllama"></option>
+      </select>
+      <div class="base-only">
+        <label for="base" data-t="baseUrl">API base URL</label>
+        <input type="url" id="base" spellcheck="false" autocomplete="off">
+      </div>
+      <label for="model" data-t="model">Model</label>
+      <div class="row">
+        <input type="text" id="model" list="modelList" spellcheck="false" autocomplete="off">
+        <button type="button" class="btn btn--ghost sm" id="modelsBtn" data-t="loadModels">Load models</button>
+      </div>
+      <datalist id="modelList"></datalist>
+      <label for="key" id="keyLbl" data-t="apiKey">API key</label>
+      <input type="password" id="key" spellcheck="false" autocomplete="off" data-t-ph="keyPh">
+      <label class="chk"><input type="checkbox" id="remember"> <span data-t="remember"></span></label>
+      <p class="hint" id="provNote"></p>
+      <label for="business" data-t="business">Business name</label>
+      <input type="text" id="business" maxlength="80" data-t-ph="businessPh">
+    </fieldset>
+
+    <fieldset>
+      <legend data-t="sExport">--export</legend>
+      <p class="hint top" data-t="exportBody"></p>
+      <label for="exportLang" data-t="exportLang">Widget language</label>
+      <select id="exportLang"><option value="en">English</option><option value="de">Deutsch</option></select>
+      <p class="hint" data-t="exportWarn"></p>
+      <div class="cta">
+        <button type="button" class="btn btn--amber" id="exportBtn" data-t="exportBtn">Download widget bundle (.zip)</button>
+      </div>
+      <p class="status" id="exportStatus" role="status" aria-live="polite"></p>
+    </fieldset>
+  </div>
+
+  <section class="chat" aria-labelledby="chatTitle">
+    <div class="term">
+      <div class="term__bar"><i></i><i></i><i></i><span id="chatTitle" data-t="chatTitle">$ ask</span>
+        <button type="button" class="link" id="clearChat" data-t="clearChat">Clear chat</button></div>
+      <div class="log" id="log" aria-live="polite"></div>
+      <form class="ask" id="askForm">
+        <textarea id="q" rows="1" maxlength="1000" data-t-ph="chatPh" aria-label="Question"></textarea>
+        <button type="submit" class="btn btn--amber" id="askBtn" data-t="send">Ask</button>
+      </form>
+    </div>
+    <p class="hint nokey" id="noKey" data-t="noKeyMode"></p>
+    <p class="updates" id="updates" hidden><a id="lnkUpdates" href="/?topic=faq-chatbot#contact" data-t="updates">Get updates</a></p>
+  </section>
+</main>
+
+<footer class="wrap foot">
+  <p><span data-t="footer">MIT</span> · <a id="lnkHome2" href="/tools/faq-chatbot/">hmsk.life</a></p>
+</footer>
+
+<script type="module" src="app.js?v=6"></script>
+</body>
+</html>

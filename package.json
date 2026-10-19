@@ -1,0 +1,12 @@
+{
+  "name": "hmsk-faq-chatbot",
+  "version": "1.0.0",
+  "description": "FAQ chatbot that runs in the browser: your documents, your API key, citations. Plus an embeddable widget and proxies.",
+  "type": "module",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "start": "python3 -m http.server 8080 --directory public"
+  }
+}
