@@ -101,7 +101,7 @@ Anbieter: Anthropic (Standard, Modell \`claude-haiku-5-5\`) oder jede OpenAI-kom
 
 ## Optionen des Widgets
 
-\`data-title\`, \`data-greeting\`, \`data-lang\` (\`de\`/\`en\`), \`data-color\` (\`#0f766e\`),
+\`data-title\`, \`data-greeting\`, \`data-lang\` (\`de\`/\`en\`), \`data-color\` (\`#1E4C8A\`),
 \`data-position\` (\`right\`/\`left\`), \`data-credit="off"\` blendet den kleinen Hinweis "erstellt mit hmsk.life" aus.
 
 ## Datenschutz
@@ -161,7 +161,7 @@ Providers: Anthropic (default, model \`claude-haiku-5-5\`) or any OpenAI-compati
 
 ## Widget options
 
-\`data-title\`, \`data-greeting\`, \`data-lang\` (\`en\`/\`de\`), \`data-color\` (\`#0f766e\`),
+\`data-title\`, \`data-greeting\`, \`data-lang\` (\`en\`/\`de\`), \`data-color\` (\`#1E4C8A\`),
 \`data-position\` (\`right\`/\`left\`), \`data-credit="off"\` hides the small "made with hmsk.life" link.
 
 ## Privacy
