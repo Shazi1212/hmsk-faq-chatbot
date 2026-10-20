@@ -76,7 +76,7 @@ function applyLang() {
   $('#lnkHome').href = $('#lnkHome2').href = LINK_BASE + (de ? '/de/tools/faq-chatbot/' : '/tools/faq-chatbot/');
   $('#lnkImprint').href = LINK_BASE + (de ? '/impressum/' : '/imprint/');
   $('#lnkPrivacy').href = LINK_BASE + (de ? '/datenschutz/' : '/privacy/');
-  $('#lnkUpdates').href = LINK_BASE + (de ? '/de/' : '/') + '?topic=faq-chatbot#contact';
+  $('#lnkUpdates').href = LINK_BASE + (de ? '/de/newsletter/' : '/subscribe/') + '?topic=faq-chatbot';
   renderProvider();
   renderDocs();
   renderSem();
