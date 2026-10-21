@@ -80,7 +80,9 @@ function applyLang() {
   renderProvider();
   renderDocs();
   renderSem();
-  if (!$('#log').children.length) sys(t().welcome);
+  // The greeting is re-rendered in the new language as long as it is all the chat holds.
+  const log = $('#log');
+  if (!log.children.length || (log.children.length === 1 && log.firstElementChild.dataset.welcome)) { log.textContent = ''; welcome(); }
 }
 
 // ---------- documents ----------
@@ -237,6 +239,7 @@ function msg(cls) {
   return el;
 }
 function sys(text) { const el = msg('sys'); el.textContent = text; return el; }
+function welcome() { sys(t().welcome).dataset.welcome = '1'; }
 
 function sourceLabel(s) { return s.docName + (s.page ? ', ' + t().page + ' ' + s.page : ''); }
 
@@ -441,7 +444,7 @@ function bind() {
   $('#business').onchange = e => { settings.business = e.target.value.trim(); saveSettings(); };
   $('#exportLang').onchange = e => { settings.exportLang = e.target.value; saveSettings(); };
   $('#exportBtn').onclick = exportBundle;
-  $('#clearChat').onclick = () => { $('#log').textContent = ''; history = []; sys(t().welcome); };
+  $('#clearChat').onclick = () => { $('#log').textContent = ''; history = []; welcome(); };
 
   const q = $('#q');
   $('#askForm').onsubmit = e => {
